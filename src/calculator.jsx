@@ -7,7 +7,14 @@ const Calculator = () => {
   // Safely evaluate mathematical expressions
   const evaluateExpression = (expression) => {
     try {
-      // Use the Function constructor for safer evaluation
+      // Handle square root and square specifically
+      if (expression.includes("sqrt")) {
+        return Math.sqrt(parseFloat(expression.replace("sqrt", "")));
+      } else if (expression.includes("^2")) {
+        return Math.pow(parseFloat(expression.replace("^2", "")), 2);
+      }
+
+      // Use the Function constructor for other calculations
       const result = new Function(`return ${expression}`)();
       return result;
     } catch {
@@ -54,6 +61,13 @@ const Calculator = () => {
         </button>
         <button onClick={handleCalculate} className="equal-button">
           =
+        </button>
+        {/* New Square and Square Root Buttons */}
+        <button onClick={() => handleClick("^2")} className="square-button">
+          x²
+        </button>
+        <button onClick={() => handleClick("sqrt")} className="sqrt-button">
+          √
         </button>
       </div>
     </div>
